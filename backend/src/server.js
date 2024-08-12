@@ -33,8 +33,46 @@ app.post('/signup', async(req, res) => {
     .catch((e)=>console.log(e))
 })
 
+app.post('/resetpassword', async (req, res) => {
+    const { email, newPassword, confirmPassword } = req.body;
 
+    if (newPassword !== confirmPassword) {
+        return res.status(400).json({ error: "Passwords do not match" });
+    }
 
+    try {
+        const result = await db.collection("hari").updateOne(
+            { Email: email },
+            { $set: { Password: newPassword } }
+        );
+
+        if (result.matchedCount > 0) {
+            res.json({ message: "Password reset successful" });
+        } else {
+            res.status(404).json({ error: "No user found with this email address" });
+        }
+    } catch (error) {
+        console.error("Error updating password:", error);
+        res.status(500).json({ error: "An error occurred while processing your request" });
+    }
+});
+app.post('/meals', async (req, res) => {
+    await db.collection("meals").insertOne({
+      breakfast: req.body.breakfast,
+      lunch: req.body.lunch,
+      dinner: req.body.dinner,
+    })
+    .then((result) => {
+      if (result) {
+        res.json({ message: "Meal data saved successfully", values: result });
+      } else {
+        res.json({ error: "Failed to save meal data" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ error: "Failed to save meal data", details: error });
+    });
+  });
 
 connectToDB(() => {
     app.listen(9001, () => {
