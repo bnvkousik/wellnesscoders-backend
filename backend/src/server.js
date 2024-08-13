@@ -74,6 +74,7 @@ app.post('/meals', async (req, res) => {
     });
   });
 
+
 connectToDB(() => {
     app.listen(9001, () => {
         console.log("server running at 9001");
