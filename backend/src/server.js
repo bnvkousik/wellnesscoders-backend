@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', async(req, res) => {
-    await db.collection("hari").findOne({Email:req.body.email})
+    await db.collection("newuser").findOne({Email:req.body.email})
     .then((result)=>{
         if(result?.Password===req.body.password){
             res.json({message:"login sucess", values:result})
@@ -22,7 +22,7 @@ app.post('/signin', async(req, res) => {
     .catch((e)=>console.log(e))
 })
 app.post('/signup', async(req, res) => {
-    await db.collection("hari").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password})
+    await db.collection("newuser").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password})
     .then((result)=>{
         if(result){
             res.json({message:"signup sucess", values:result})
@@ -41,7 +41,7 @@ app.post('/resetpassword', async (req, res) => {
     }
 
     try {
-        const result = await db.collection("hari").updateOne(
+        const result = await db.collection("login").updateOne(
             { Email: email },
             { $set: { Password: newPassword } }
         );
