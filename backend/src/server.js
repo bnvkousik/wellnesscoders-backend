@@ -22,7 +22,7 @@ app.post('/signin', async(req, res) => {
     .catch((e)=>console.log(e))
 })
 app.post('/signup', async(req, res) => {
-    await db.collection("newuser").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password})
+    await db.collection("newuser").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password,Athlete:req.body.athleteType,Gender:req.body.gender,Height:req.body.height,Weight:req.body.weight,Dateofbirth:req.body.dateofbirth})
     .then((result)=>{
         if(result){
             res.json({message:"signup sucess", values:result})
