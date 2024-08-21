@@ -14,15 +14,15 @@ app.post('/signin', async(req, res) => {
     await db.collection("newuser").findOne({Email:req.body.email})
     .then((result)=>{
         if(result?.Password===req.body.password){
-            res.json({message:"login sucess", values:result})
+            res.json({message:"login success", values:result})
         } else {
-            res.json({error:"user not found"})
+            res.json({error:"failed to login"})
         }
     })
     .catch((e)=>console.log(e))
 })
 app.post('/signup', async(req, res) => {
-    await db.collection("newuser").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password})
+    await db.collection("newuser").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password,Gender:req.body.gender,Athlete:req.body.athlete,Height:req.body.height,Weight:req.body.weight,Age:req.body.age})
     .then((result)=>{
         if(result){
             res.json({message:"signup sucess", values:result})
