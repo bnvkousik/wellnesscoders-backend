@@ -22,7 +22,11 @@ app.post('/signin', async(req, res) => {
     .catch((e)=>console.log(e))
 })
 app.post('/signup', async(req, res) => {
+<<<<<<< HEAD
     await db.collection("newuser").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password,Gender:req.body.gender,Athlete:req.body.athlete,Height:req.body.height,Weight:req.body.weight,Age:req.body.age})
+=======
+    await db.collection("newuser").insertOne({Email:req.body.email,Name:req.body.name,Mobile:req.body.mobile,Password:req.body.password,Athlete:req.body.athleteType,Gender:req.body.gender,Height:req.body.height,Weight:req.body.weight,Dateofbirth:req.body.dateofbirth})
+>>>>>>> e3b3d7a195adb5a1064d5e0424736911a0defb5b
     .then((result)=>{
         if(result){
             res.json({message:"signup sucess", values:result})
@@ -73,6 +77,7 @@ app.post('/meals', async (req, res) => {
       res.status(500).json({ error: "Failed to save meal data", details: error });
     });
   });
+
 
 connectToDB(() => {
     app.listen(9001, () => {
